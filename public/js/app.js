@@ -65885,8 +65885,6 @@ function Example() {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Example);
-console.log('example');
-console.log(document.getElementById('example'));
 
 if (document.getElementById('example')) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Example, null), document.getElementById('example'));
@@ -65912,8 +65910,8 @@ if (document.getElementById('example')) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /opt/lampp/htdocs/yummi/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /opt/lampp/htdocs/yummi/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /opt/lampp/htdocs/yummi-pizza/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /opt/lampp/htdocs/yummi-pizza/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

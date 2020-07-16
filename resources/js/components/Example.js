@@ -19,9 +19,6 @@ function Example() {
 
 export default Example;
 
-console.log('example');
-console.log(document.getElementById('example'));
-
 if (document.getElementById('example')) {
     ReactDOM.render(<Example />, document.getElementById('example'));
 }
