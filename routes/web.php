@@ -13,10 +13,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::view('/{path?}', 'index')
+//      ->where('path', '.*')
+//      ->name('react');
+
+// Route::view('/{path?}', 'index');
+
 Route::get('/', function () {
 		return view('index');
 });
 
-Route::get('/welcome', function () {
-    return view('welcome');
+
+Route::get('/login', function () {
+		return view('home');
 });
+
+// // Route::get('/home', function () {
+// // 		return view('index');
+// // });
+
+Route::get('/cart', function () {
+		return view('index');
+});
+
+// Route::get('/welcome', function () {
+//     return view('welcome');
+// });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
