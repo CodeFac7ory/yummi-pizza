@@ -13,12 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::view('/{path?}', 'index')
-//      ->where('path', '.*')
-//      ->name('react');
-
-// Route::view('/{path?}', 'index');
-
 Route::get('/', function () {
 		return view('index');
 });
