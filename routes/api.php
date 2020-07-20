@@ -27,5 +27,6 @@ Route::get('/pizzas', function () {
 
 Route::post('/orders', 'OrderController@store');
 Route::put('/orders/{id}', 'OrderController@update');
+Route::patch('/orders/{id}/complete', 'OrderController@complete');
 Route::get('/cart', 'OrderController@cart');
 Route::delete('/order_items/{id}', 'OrderController@deleteOrderItem');

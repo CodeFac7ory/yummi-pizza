@@ -19,6 +19,11 @@ class DatabaseSeeder extends Seeder
             'name' => 'Bosko',
             'email' => 'damjanovicb@gmail.com',
             'password' => '$2y$10$BKCOuBllQULBbDT/hx9Am.GG9G8278WpXm2PH3vsGD5gCNLTWz.1O',
+            'street' => '221b Baker St',
+            'postal_code' => 'NW1 6XE',
+            'city' => 'London',
+            'country' => 'United Kingdom',
+            'password' => '$2y$10$BKCOuBllQULBbDT/hx9Am.GG9G8278WpXm2PH3vsGD5gCNLTWz.1O',
             'created_at' => '2020-07-19 08:39:50',
             'updated_at' => '2020-07-19 08:39:50',
         ]);

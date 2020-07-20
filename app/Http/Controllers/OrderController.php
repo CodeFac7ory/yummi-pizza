@@ -48,7 +48,6 @@ class OrderController extends Controller
         $order->user_id = $request->user_id;
         $order->token = $request->token;
         $order->total_price = $request->total_price;
-        $order->address = $request->address;
         $order->status = $request->status;
         $order->save();
 
@@ -106,21 +105,42 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $order->user_id = $request->user_id;
-        $order->token = $request->token;
-        $order->total_price = $request->total_price;
-        $order->address = $request->address;
-        $order->status = $request->status;
 
-        $affected = DB::table('users')
+        //orders are updated each time new item is added
+        //new item is always last item in array
+
+        $lastIndex = count($request->items) - 1;
+
+        if ($lastIndex > -1) {
+
+            $newItem = $request->items[$lastIndex];
+
+            $orderItem = new OrderItem;
+            $orderItem->order_id = $id;
+            $orderItem->pizza_id = $newItem['pizza_id'];
+            $orderItem->quantity = $newItem['quantity'];
+            $orderItem->price = $newItem['price'];
+            $orderItem->save();
+        }
+
+        $affected = DB::table('orders')
             ->where('id', $id)
             ->update([
                 'user_id' => $request->user_id,
                 'token' => $request->token,
                 'total_price' => $request->total_price,
-                'address' => $request->address,
+                'street' => $request->street,
+                'postal_code' => $request->postal_code,
+                'city' => $request->city,
+                'country' => $request->country,
                 'status' => $request->status,
             ]);
+
+        $order = DB::table('orders')
+        ->where('id', $id)
+        ->get();
+
+        return $order;
     }
 
     /**
@@ -159,7 +179,7 @@ class OrderController extends Controller
 
             $order[0]->items = DB::table('order_items')
                 ->join('pizzas', 'order_items.pizza_id', '=', 'pizzas.id')
-                ->where('order_id', '=', $order[0]->id)
+                ->where('order_id', $order[0]->id)
                 ->select('order_items.*', 'pizzas.name', 'pizzas.picture')
                 ->get();
         }
@@ -171,7 +191,56 @@ class OrderController extends Controller
     public function deleteOrderItem(Request $request, $id)
     {
 
-        $res = DB::table('order_items')->where('id', $id)->delete();
-        return $res;
+        $item = DB::table('order_items')
+            ->where('id', $id)
+            ->get();
+
+        DB::table('order_items')->where('id', $id)->delete();
+
+        $items = DB::table('order_items')
+            ->join('pizzas', 'order_items.pizza_id', '=', 'pizzas.id')
+            ->where('order_id', $item[0]->order_id)
+            ->select('order_items.*', 'pizzas.name', 'pizzas.picture')
+            ->get();
+
+        $totalPrice = 0;
+
+        foreach ($items as $reqItem) {
+            $totalPrice += $reqItem->price;
+        }
+
+        $affected = DB::table('orders')
+        ->where('id', $item[0]->order_id)
+        ->update([
+            'total_price' => $totalPrice,
+        ]);
+
+        $order = DB::table('orders')
+        ->where('id', $item[0]->order_id)
+        ->get();
+
+        $order[0]->items = $items;
+
+        return $order;
+    }
+
+
+    public function complete(Request $request, $id)
+    {
+        $affected = DB::table('orders')
+            ->where('id', $id)
+            ->update([
+                'status' => 'complete',
+                'street' => $request->input('street'),
+                'postal_code' => $request->input('postalCode'),
+                'city' => $request->input('city'),
+                'country' => $request->input('country'),
+            ]);
+
+        $order = DB::table('orders')
+        ->where('id', $id)
+        ->get();
+
+        return $order;
     }
 }

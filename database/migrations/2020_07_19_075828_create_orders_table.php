@@ -18,7 +18,11 @@ class CreateOrdersTable extends Migration
             $table->foreignId('user_id')->nullable();
             $table->string('token', 50)->nullable();
             $table->integer('total_price')->nullable();
-            $table->string('address', 1000)->nullable();
+            $table->string('name', 255)->nullable();
+            $table->string('street', 255)->nullable();
+            $table->string('postal_code', 255)->nullable();
+            $table->string('city', 255)->nullable();
+            $table->string('country', 255)->nullable();
             $table->string('status', 50)->nullable();
             $table->timestamps();
         });
