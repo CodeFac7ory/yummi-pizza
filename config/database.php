@@ -1,3 +1,41 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@CodeFac7ory 
+Learn Git and GitHub without any code!
+Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.
+
+
+CodeFac7ory
+/
+yummi-pizza
+1
+00
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+yummi-pizza/config/database.php /
+@CodeFac7ory
+CodeFac7ory First commit
+Latest commit aeb5976 2 days ago
+ History
+ 1 contributor
+147 lines (126 sloc)  4.94 KB
+  
+Code navigation is available!
+Navigate your code with ease. Click on function and method calls to jump to their definitions or references in the same repository. Learn more
+
 <?php
 
 use Illuminate\Support\Str;
@@ -145,3 +183,15 @@ return [
     ],
 
 ];
+© 2020 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
