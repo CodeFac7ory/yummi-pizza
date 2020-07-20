@@ -1,10 +1,10 @@
-laravel<?php
+<?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePizzasTable extends Migration
+class CreateOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreatePizzasTable extends Migration
      */
     public function up()
     {
-        Schema::create('pizzas', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255);
-            $table->string('description', 255);
-            $table->string('picture', 255);
-            $table->integer('price');
+            $table->foreignId('user_id')->nullable();
+            $table->string('token', 50)->nullable();
+            $table->integer('total_price')->nullable();
+            $table->string('address', 1000)->nullable();
+            $table->string('status', 50)->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreatePizzasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pizzas');
+        Schema::dropIfExists('orders');
     }
 }
