@@ -26,6 +26,7 @@ Route::get('/pizzas', function () {
 });
 
 Route::post('/orders', 'OrderController@store');
+Route::get('/orders', 'OrderController@index');
 Route::put('/orders/{id}', 'OrderController@update');
 Route::patch('/orders/{id}/complete', 'OrderController@complete');
 Route::get('/cart', 'OrderController@cart');

@@ -21,9 +21,27 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new OrderCollection(Order::all());
+
+        $orders = DB::table('orders')
+            ->where('user_id', $request->user_id)
+            ->where('status', 'complete')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
+        foreach ($orders as $order) {
+
+            $orderItems = DB::table('order_items')
+                ->join('pizzas', 'order_items.pizza_id', '=', 'pizzas.id')
+                ->where('order_id', $order->id)
+                ->select('order_items.*', 'pizzas.name', 'pizzas.picture')
+                ->get();
+
+                $order->items = $orderItems;
+        }
+
+        return $orders;
     }
 
     /**
@@ -44,14 +62,21 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+
+        //if there is some pending orders from this user we delete them so we have only one pending
+        if ($request->user_id) {
+            DB::table('orders')
+                ->where('user_id', $request->user_id)
+                ->where('status', 'pending')
+                ->delete();
+        }
+
         $order = new Order;
         $order->user_id = $request->user_id;
         $order->token = $request->token;
         $order->total_price = $request->total_price;
         $order->status = $request->status;
         $order->save();
-
-        // $order->items = [];
 
         foreach ($request->items as $reqItem) {
             $orderItem = new OrderItem;
@@ -61,15 +86,6 @@ class OrderController extends Controller
             $orderItem->price = $reqItem['price'];
 
             $orderItem->save();
-
-            // $order->items[] = array(
-            //     'name' => $orderItem['id'],
-            //     'order_id' => $orderItem['order_id'],
-            //     'pizza_id' => $orderItem['pizza_id'],
-            //     'quantity' => $orderItem['quantity'],
-            //     'price' => $orderItem['price']
-            // );
-        }
 
         return (new OrderResource($order))->response()->setStatusCode(201);
     }
@@ -160,7 +176,7 @@ class OrderController extends Controller
             $order = DB::table('orders')
                 ->where('user_id', $request->input('user_id'))
                 ->where('status', 'pending')
-                ->orderBy('created_at', 'desc')
+                ->orderBy('updated_at', 'desc')
                 ->take(1)
                 ->get();
 
@@ -170,7 +186,7 @@ class OrderController extends Controller
             $order = DB::table('orders')
                 ->where('token', $request->header('X-CSRFToken'))
                 ->where('status', 'pending')
-                ->orderBy('created_at', 'desc')
+                ->orderBy('updated_at', 'desc')
                 ->take(1)
                 ->get();
         }
@@ -227,6 +243,7 @@ class OrderController extends Controller
 
     public function complete(Request $request, $id)
     {
+
         $affected = DB::table('orders')
             ->where('id', $id)
             ->update([
