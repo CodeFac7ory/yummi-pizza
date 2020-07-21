@@ -86,6 +86,7 @@ class OrderController extends Controller
             $orderItem->price = $reqItem['price'];
 
             $orderItem->save();
+        }
 
         return (new OrderResource($order))->response()->setStatusCode(201);
     }
