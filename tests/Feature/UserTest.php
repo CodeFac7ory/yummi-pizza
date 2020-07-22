@@ -36,7 +36,6 @@ class UserTest extends TestCase
         $response = $this->get('/api/orders');
         $response->assertStatus(200);
 
-
         $response = $this->get('/api/cart');
         $response->assertStatus(200);
     }
