@@ -8,6 +8,7 @@ Users can register, as well. Address is mandatory so he doesn't need to enter ad
 - Back end: Laravel
 - Database: MySQL
 - Git flow followed
+- Laravel and Jest tests
 - Heroku link: https://yumi-pizza.herokuapp.com/
 
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
