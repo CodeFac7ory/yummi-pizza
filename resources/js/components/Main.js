@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect }  from 'react';
 import ReactDOM from 'react-dom';
 import { Route, BrowserRouter as Router, Switch, Link } from 'react-router-dom';
 
 import Cart from './Cart';
 import Menu from './Menu';
+import History from './History';
 
 function Main() {
 
@@ -16,12 +17,47 @@ function Main() {
 		active = 'home';
 	}
 
-	const [auth, setAuth] = React.useState(null);
+	const [auth, setAuth] = useState(null);
+	const [currency, setCurrency] = useState('euro');
+	const [currencyExchangeRate, setCurrencyExchangeRate] = useState(1);
+	const [euroToDollar, setEuroToDollar] = useState(1.14);
+	const [currencySymbol, setCurrencySymbol] = useState('€');
+	const [delieveryCosts, setDelieveryCosts] = useState(200);
 
-	React.useEffect(() => {
+	const handleCurrencyChange = (e) => {
+		setCurrency(e.target.value);
+
+		if (e.target.value === 'euro') {
+			setCurrencyExchangeRate(1);
+			setCurrencySymbol('€');
+		}
+		else {
+			setCurrencyExchangeRate(euroToDollar);
+			setCurrencySymbol('$');
+		}
+	};
+
+	useEffect(() => {
 		if (window.Auth) {
     	setAuth(window.Auth);
 		}
+
+		axios.get('http://api.exchangeratesapi.io/latest')
+	  .then(function (response) {
+	    console.log('[[exchangeratesapi response]]');
+	    console.log(response);
+
+			setEuroToDollar(response.rated.USD);
+	  })
+	  .catch(function (error) {
+	    console.log('[[error]]');
+	    console.log(error);
+
+	  })
+	  .then(function () {
+
+	  });
+
   }, []);
 
 	function logout(e) {
@@ -35,6 +71,7 @@ function Main() {
 	    console.log(response);
 
 	    setAuth(null);
+	    window.location.reload();
 	  })
 	  .catch(function (error) {
 	    console.log('[[error]]');
@@ -46,7 +83,7 @@ function Main() {
   }
 
   return (
-  	<div>
+  	<div className="container">
 			<Router>
 				<nav className="navbar navbar-expand-lg navbar-light bg-light">
 				  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,10 +94,22 @@ function Main() {
 				      <Link className="nav-link" to="/yummi-pizza/public/">Home</Link>
 				      {!(auth && auth.user) && (
 				      <li className="nav-item">
-				        <a className="nav-link" href="/yummi-pizza/public/login">Login</a>
+				        <a className="nav-link" href="/yummi-pizza/public/login">Login/Register</a>
 				      </li>
 				      )}
 				      <Link className="nav-link" to="/yummi-pizza/public/cart">Shopping Cart</Link>
+            </ul>
+            <ul className="navbar-nav">
+				      <select onChange={handleCurrencyChange}>
+				      	<option value="euro">
+				      		Euro
+				      	</option>
+				      	<option value="dolar">
+				      		Dollar
+				      	</option>
+				      </select>
+            </ul>
+            <ul className="navbar-nav">
 				      {auth && auth.user && (
 		      			<li className="nav-item dropdown">
 					        <a className="nav-link dropdown-toggle"
@@ -70,6 +119,8 @@ function Main() {
 					          {auth.user.name}
 					        </a>
 		        			<div className="dropdown-menu" aria-labelledby="navbarDropdown">
+					          <Link className="dropdown-item" to="/yummi-pizza/public/history">View Order History</Link>
+          					<div className="dropdown-divider"></div>
 					          <a className="dropdown-item" href="logout" onClick={logout}>Logout</a>
 					        </div>
 					      </li>
@@ -102,10 +153,30 @@ function Main() {
 				<React.Fragment>
 					<main>
 						<Switch>
-				      <Route path="/yummi-pizza/public/" component={Menu} exact />
-				      <Route path="/yummi-pizza/public/cart" component={Cart} />
-{/*				      <Route path="/" component={Menu} exact />
-				      <Route path="/cart" component={Cart} />*/}
+				      <Route path="/yummi-pizza/public/"
+				      	component={props =>
+				      		<Menu
+				      			currencyExchangeRate={currencyExchangeRate}
+				      			currencySymbol={currencySymbol}
+				      			delieveryCosts={delieveryCosts}
+				      		/>}
+				      exact />
+				      <Route path="/yummi-pizza/public/cart"
+				      	component={props =>
+				      		<Cart
+				      			currencyExchangeRate={currencyExchangeRate}
+				      			currencySymbol={currencySymbol}
+				      			delieveryCosts={delieveryCosts}
+				      		/>}
+				      />
+				      <Route path="/yummi-pizza/public/history"
+				      	component={props =>
+				      		<History
+				      			currencyExchangeRate={currencyExchangeRate}
+				      			currencySymbol={currencySymbol}
+				      			delieveryCosts={delieveryCosts}
+				      		/>}
+				      />
 				    </Switch>
 	        </main>
         </React.Fragment>
