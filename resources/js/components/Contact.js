@@ -38,7 +38,7 @@ function Contact(props) {
       country: country,
     })
     .then(function (response) {
-      console.log('[[response]]');
+      console.log('[[submit response]]');
       console.log(response);
 
       props.resetCart(`The order is complete. It is going to be delievered to address:\n
@@ -47,7 +47,7 @@ function Contact(props) {
         ${country}`);
     })
     .catch(function (error) {
-      console.log('[[error]]');
+      console.log('[[submit error]]');
       console.log(error);
       setStatus(error);
     })

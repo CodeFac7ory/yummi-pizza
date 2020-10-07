@@ -1,11 +1,10 @@
 import React, { useState, useEffect }  from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 
 import Contact from './Contact';
 
 function Cart(props) {
-
-	console.log('[[Cart]]');
 
 	const [order, setOrder] = useState(null);
 	const [status, setStatus] = useState('The shopping cart is empty!');
@@ -24,16 +23,12 @@ function Cart(props) {
 		  }
 	  })
 	  .then(function (response) {
-	  	console.log(response);
 	    setOrder(response.data[0]);
 	  })
 	  .catch(function (error) {
-	    console.log('[[error]]');
+	    console.log('[[cart error]]');
 	    console.log(error);
 	  })
-	  .then(function () {
-
-	  });
 
   }, []);
 
@@ -41,19 +36,14 @@ function Cart(props) {
 		const temp = { ...order };
 
 		axios.delete('/yummi-pizza/public/api/order_items/'+item.id, {})
-		  .then(function (response) {
-		    console.log('[[response]]');
-		    console.log(response);
+	  .then(function (response) {
+			setOrder(response.data[0]);
+	  })
+	  .catch(function (error) {
+	    console.log('[[error]]');
+	    console.log(error);
+	  })
 
-				setOrder(response.data[0]);
-		  })
-		  .catch(function (error) {
-		    console.log('[[error]]');
-		    console.log(error);
-		  })
-		  .then(function () {
-
-		  });
 	};
 
 	const resetCart = (status) => {
@@ -62,12 +52,11 @@ function Cart(props) {
 	};
 
 	const handleOrderClick = () => {
+
 		if (window.Auth.user) {
 
-		axios.patch('/yummi-pizza/public/api/orders/'+order.id+'/complete', {})
+			axios.patch('/yummi-pizza/public/api/orders/'+order.id+'/complete', {})
 		  .then(function (response) {
-		    console.log('[[response]]');
-		    console.log(response);
 
 				setOrder(null);
 				setStatus(`The order is complete. It is going to be delievered to address:\n
@@ -80,9 +69,6 @@ function Cart(props) {
 		    console.log(error);
 		    setStatus(error);
 		  })
-		  .then(function () {
-
-		  });
 		}
 		else {
 			setStatus('unauthorized');
@@ -151,6 +137,7 @@ function Cart(props) {
 			  		</div>
 			  		<div className="col-2">
 			  			<button type="button" className="btn btn-success float-right btn-lg"
+			  				role="order"
 			  				onClick={handleOrderClick}
 			  			>
 			  				<i className="fa fa-shopping-cart"></i> Order

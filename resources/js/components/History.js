@@ -25,7 +25,7 @@ function History(props) {
 	    setHistory([...response.data]);
 	  })
 	  .catch(function (error) {
-	    console.log('[[error]]');
+	    console.log('[[history error]]');
 	    console.log(error);
 	  })
 	  .then(function () {

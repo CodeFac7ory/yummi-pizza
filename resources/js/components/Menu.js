@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 
 function Menu(props) {
 
@@ -13,6 +14,8 @@ function Menu(props) {
 	    _token: window.Auth.token
 	  })
 	  .then(function (response) {
+	  	console.log('[[[[pizzas response]]]]');
+	  	console.log(response);
 
 	    setPizzas(response.data.data);
 
@@ -24,12 +27,9 @@ function Menu(props) {
 			setQuantities(temp);
 	  })
 	  .catch(function (error) {
-	    console.log('[[error]]');
+	    console.log('[[pizzas error]]');
 	    console.log(error);
 	  })
-	  .then(function () {
-
-	  });
 
 	  let params = {};
 		if (window.Auth.user) {
@@ -43,21 +43,15 @@ function Menu(props) {
 		  }
 	  })
 	  .then(function (response) {
-	  	console.log('[[[[cart response]]]]');
-	  	console.log(response);
 	  	if (response.data[0]) {
-
 		  	setItems(response.data[0].items);
 		    setOrder(response.data[0]);
 	  	}
 	  })
 	  .catch(function (error) {
-	    console.log('[[error]]');
-	    console.log(error);
+	  	console.log('[[[[cart error]]]]');
+	  	console.log(error);
 	  })
-	  .then(function () {
-
-	  });
 
   }, []);
 
@@ -88,12 +82,14 @@ function Menu(props) {
 	}, [items]);
 
 	useEffect(() => {
+		console.log('[[[menu.js order]]]');
+		console.log(order);
 
 		if (order && order.id) {
 
 			axios.put('/yummi-pizza/public/api/orders/' + order.id, order)
 		  .then(function (response) {
-		    console.log('[[response]]');
+		    console.log('[[put order response]]');
 		    console.log(response);
 
 		    //enable buttons again after item is saved to db
@@ -104,12 +100,9 @@ function Menu(props) {
 		    // setOrder(null);
 		  })
 		  .catch(function (error) {
-		    console.log('[[error]]');
+		    console.log('[[put order error]]');
 		    console.log(error);
 		  })
-		  .then(function () {
-
-		  });
 
 		}
 		else if (order){
@@ -130,9 +123,6 @@ function Menu(props) {
 		    console.log('[[error]]');
 		    console.log(error);
 		  })
-		  .then(function () {
-
-		  });
 		}
 	}, [order]);
 
@@ -195,7 +185,7 @@ function Menu(props) {
 		  			</h5>
 		  		</div>
 		  		<div className="col-1 my-auto">
-		  			<button type="button" className="btn btn-success float-right btn-sm"
+		  			<button type="button" className="add-to-cart btn btn-success float-right btn-sm"
 		  				onClick={(e) => addToCart(e, value, quantities[index])}
 		  			>
 		  				Add to cart

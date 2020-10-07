@@ -42,21 +42,21 @@ function Main() {
     	setAuth(window.Auth);
 		}
 
-		axios.get('http://api.exchangeratesapi.io/latest')
-	  .then(function (response) {
-	    console.log('[[exchangeratesapi response]]');
-	    console.log(response);
+		// axios.get('http://api.exchangeratesapi.io/latest')
+	 //  .then(function (response) {
+	 //    console.log('[[exchangeratesapi response]]');
+	 //    console.log(response);
 
-			setEuroToDollar(response.rated.USD);
-	  })
-	  .catch(function (error) {
-	    console.log('[[error]]');
-	    console.log(error);
+		// 	setEuroToDollar(response.rated.USD);
+	 //  })
+	 //  .catch(function (error) {
+	 //    console.log('[[error]]');
+	 //    console.log(error);
 
-	  })
-	  .then(function () {
+	 //  })
+	 //  .then(function () {
 
-	  });
+	 //  });
 
   }, []);
 
@@ -67,14 +67,14 @@ function Main() {
 	    _token: window.Auth.token
 	  })
 	  .then(function (response) {
-	    console.log('[[response]]');
+	    console.log('[[logout response]]');
 	    console.log(response);
 
 	    setAuth(null);
 	    window.location.reload();
 	  })
 	  .catch(function (error) {
-	    console.log('[[error]]');
+	    console.log('[[logout error]]');
 	    console.log(error);
 	  })
 	  .then(function () {
