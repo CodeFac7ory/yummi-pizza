@@ -14,9 +14,6 @@ function Menu(props) {
 	    _token: window.Auth.token
 	  })
 	  .then(function (response) {
-	  	console.log('[[[[pizzas response]]]]');
-	  	console.log(response);
-
 	    setPizzas(response.data.data);
 
 	    const temp = [];
@@ -151,20 +148,20 @@ function Menu(props) {
 	  	<br />
 		  {pizzas.map((value, index) => {
 		  	return (<div key={index} className="row mx-md-n5 mb-2">
-		  		<div className="col-3 my-auto">
+		  		<div className="col-xs-12 col-md-3 my-auto">
 		  			<img src={value.picture} style={{
 			  			display: 'block',
-						  maxWidth: 230,
-						  maxHeight: 150,
+						  // maxWidth: 230,
+						  // maxHeight: 150,
 						  width: '100%',
 						  height: 'auto',
 	  				}}/>
 	  			</div>
-		  		<div className="col-6 my-auto">
+		  		<div className="col-xs-push-0 col-xs-6 col-md-6 my-auto">
 		  			<h4>{value.name}</h4>
 		  			<p className="text-justify">{value.description}</p>
 		  		</div>
-		  		<div className="col-1 my-auto">
+		  		<div className="col-xs-2 col-md-1 my-auto">
 		  			<input type="number"
 		  				name={ "quantity_" +  value.id }
 		  				min="1"
@@ -178,13 +175,13 @@ function Menu(props) {
  							}}
 		  			/>
 		  		</div>
-		  		<div className="col-1 my-auto pt-2">
+		  		<div className="col-xs-2 col-md-1 my-auto pt-2">
 		  			<h5>
 		  				{props.currencySymbol} { (Math.round(value.price * (quantities && quantities[index] ? quantities[index] : 0)
 		  					* props.currencyExchangeRate) / 100).toFixed(2)}
 		  			</h5>
 		  		</div>
-		  		<div className="col-1 my-auto">
+		  		<div className="col-xs-2 col-md-1 my-auto">
 		  			<button type="button" className="add-to-cart btn btn-success float-right btn-sm"
 		  				onClick={(e) => addToCart(e, value, quantities[index])}
 		  			>

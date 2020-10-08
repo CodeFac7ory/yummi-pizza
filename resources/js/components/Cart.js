@@ -82,25 +82,25 @@ function Cart(props) {
 			  	<React.Fragment>
 				  	{ order.items.map((value, index) => {
 					  	return (<div key={index} className="row mx-md-n5 mb-2">
-					  		<div className="col-3 my-auto">
+					  		<div className="col-xs-12 col-sm-5 col-md-4 my-auto">
 					  			<img src={value.picture} style={{
 						  			display: 'block',
-									  maxWidth: 230,
-									  maxHeight: 150,
-									  width: 'auto',
+									  // maxWidth: 230,
+									  // maxHeight: 150,
+									  width: '100%',
 									  height: 'auto',
 				  				}}/>
 				  			</div>
-					  		<div className="col-5 my-auto">
+					  		<div className="col-xs-push-0 col-xs-6 col-sm-1 col-md-4 my-auto">
 					  			{value.name}
 					  		</div>
-					  		<div className="col-1 my-auto">
+					  		<div className="col-xs-2 col-sm-2 col-md-1 my-auto">
 					  			{value.quantity}
 					  		</div>
-					  		<div className="col-1 my-auto">
+					  		<div className="col-xs-2 col-sm-2 col-md-1 my-auto">
 					  			{props.currencySymbol} {(Math.round(value.price * props.currencyExchangeRate) / 100).toFixed(2)}
 					  		</div>
-					  		<div className="col-2 my-auto">
+					  		<div className="col-xs-2 col-sm-2 col-md-2 my-auto">
 					  			<button type="button" className="btn btn-danger float-right btn-sm"
 					  				onClick={() => removeFromCart(value, index)}
 					  			>
@@ -111,32 +111,32 @@ function Cart(props) {
 					  })
 				  }
 				  <br />
-				  <div  className="row mx-md-n5 mb-2">
-				  	<div className="col-3 my-auto">
+				  <div className="row mx-md-n5 mb-2">
+				  	<div className="col-xs-0 col-sm-0 col-md-4 my-auto">
 				  	</div>
-				  	<div className="col-5 my-auto">
+				  	<div className="col-xs-5 col-sm-5 col-md-4 my-auto">
 				  		<h5>Delievery costs:</h5>
 				  	</div>
-			  		<div className="col-1 my-auto">
+			  		<div className="col-xs-3 col-sm-3 col-md-1 my-auto">
 			  		</div>
-			  		<div className="col-1 my-auto">
+			  		<div className="col-xs-2 col-sm-2 col-md-1 my-auto">
 			  			<h5>{props.currencySymbol} {(Math.round(props.delieveryCosts * props.currencyExchangeRate) / 100).toFixed(2)}</h5>
 			  		</div>
 				  </div>
 				  <br />
 				  <div  className="row mx-md-n5 mb-2">
-				  	<div className="col-3 my-auto">
+				  	<div className="col-xs-0 col-sm-0 col-md-4 my-auto">
 				  	</div>
-				  	<div className="col-5 my-auto">
+				  	<div className="col-xs-5 col-sm-5 col-md-4 my-auto">
 				  		<h1>Total:</h1>
 				  	</div>
-			  		<div className="col-1 my-auto">
+			  		<div className="col-xs-3 col-sm-3 col-md-1 my-auto">
 			  		</div>
-			  		<div className="col-1 my-auto">
+			  		<div className="col-xs-2 col-sm-2 col-md-1 my-auto">
 			  			<h5>{props.currencySymbol} {(Math.round(order.total_price * props.currencyExchangeRate) / 100).toFixed(2)}</h5>
 			  		</div>
-			  		<div className="col-2">
-			  			<button type="button" className="btn btn-success float-right btn-lg"
+			  		<div className="col-xs-2 col-sm-2 col-md-2">
+			  			<button type="button" className="btn btn-success float-right btn"
 			  				role="order"
 			  				onClick={handleOrderClick}
 			  			>
