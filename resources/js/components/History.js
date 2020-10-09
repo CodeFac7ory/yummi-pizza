@@ -47,16 +47,16 @@ function History(props) {
 					return (<React.Fragment key={index}>
 						<h5>
 							<div key={'title' + index} className="row mx-md-n5 mb-2">
-					  		<div className="col-1 my-auto">
+					  		<div className="col-sm-3 col-md-1 my-auto">
 					  			Time:
 					  		</div>
-					  		<div className="col-9 my-auto">
+					  		<div className="col-sm-3 col-md-9 my-auto">
 					  			{new Date(new Date(order.updated_at) - (new Date()).getTimezoneOffset()*60*1000).toLocaleString()}
 					  		</div>
-					  		<div className="col-1 my-auto">
+					  		<div className="col-sm-3 col-md-1 my-auto">
 					  			Quantity
 					  		</div>
-					  		<div className="col-1 my-auto" style={{textAlign: 'right'}}>
+					  		<div className="col-sm-3 col-md-1 my-auto" style={{textAlign: 'right'}}>
 					  			Price
 					  		</div>
 							</div>
@@ -65,15 +65,15 @@ function History(props) {
 						{
 							order.items.map((item, itemIndex) => {
 								return (<div key={'item' + itemIndex} className="row mx-md-n5 mb-2">
-						  		<div className="col-1 my-auto">
+						  		<div className="col-sm-3 col-md-1 my-auto">
 						  		</div>
-						  		<div className="col-9 my-auto">
+						  		<div className="col-sm-3 col-md-9 my-auto">
 						  			{item.name}
 						  		</div>
-						  		<div className="col-1 my-auto" style={{textAlign: 'center'}}>
+						  		<div className="col-sm-3 col-md-1 my-auto" style={{textAlign: 'center'}}>
 						  			{item.quantity}
 						  		</div>
-						  		<div className="col-1 my-auto" style={{textAlign: 'right'}}>
+						  		<div className="col-sm-3 col-md-1 my-auto" style={{textAlign: 'right'}}>
 						  			{props.currencySymbol} {(Math.round(item.price * props.currencyExchangeRate) / 100).toFixed(2)}
 						  		</div>
 								</div>);
@@ -81,26 +81,26 @@ function History(props) {
 						}
 						<hr/>
 						<div key={'itemDelieveryCosts' + index} className="row mx-md-n5 mb-2">
-				  		<div className="col-1 my-auto">
+				  		<div className="col-sm-3 col-md-1 my-auto">
 				  		</div>
-				  		<div className="col-9 my-auto">
+				  		<div className="col-sm-3 col-md-9 my-auto">
 				  			Delievery costs
 				  		</div>
-				  		<div className="col-1 my-auto">
+				  		<div className="col-sm-3 col-md-1 my-auto">
 				  		</div>
-				  		<div className="col-1 my-auto" style={{textAlign: 'right'}}>
+				  		<div className="col-sm-3 col-md-1 my-auto" style={{textAlign: 'right'}}>
 				  			{props.currencySymbol} {(Math.round(props.delieveryCosts * props.currencyExchangeRate) / 100).toFixed(2)}
 				  		</div>
 						</div>
 						<hr/>
 						<h4>
 							<div key={'total' + index} className="row mx-md-n5 mb-2">
-					  		<div className="col-1 my-auto">
+					  		<div className="col-sm-3 col-md-1 my-auto">
 					  		</div>
-					  		<div className="col-9 my-auto">
+					  		<div className="col-sm-3 col-md-9 my-auto">
 					  			Total price:
 					  		</div>
-					  		<div className="col-2 my-auto" style={{textAlign: 'right'}}>
+					  		<div className="col-sm-6 col-md-2 my-auto" style={{textAlign: 'right'}}>
 					  			{props.currencySymbol} {(Math.round(order.total_price * props.currencyExchangeRate) / 100).toFixed(2)}
 					  		</div>
 							</div>
