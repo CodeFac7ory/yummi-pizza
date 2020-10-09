@@ -16,6 +16,7 @@
         "@testing-library/jest-dom": "^5.11.4",
         "@testing-library/react": "^11.0.4",
         "axios": "^0.19",
+        "axios-mock-adapter": "^1.18.2",
         "babel-jest": "^26.3.0",
         "babel-polyfill": "^6.26.0",
         "bootstrap": "^4.0.0",

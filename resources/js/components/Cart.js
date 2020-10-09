@@ -7,7 +7,7 @@ import Contact from './Contact';
 function Cart(props) {
 
 	const [order, setOrder] = useState(null);
-	const [status, setStatus] = useState('The shopping cart is empty!');
+	const [status, setStatus] = useState('Loading');
 
 	useEffect(() => {
 
@@ -23,6 +23,9 @@ function Cart(props) {
 		  }
 	  })
 	  .then(function (response) {
+	  	if (!response.data[0] || response.data[0].items || response.data[0].items.length === 0) {
+	  		setStatus('The shopping cart is empty!')
+	  	}
 	    setOrder(response.data[0]);
 	  })
 	  .catch(function (error) {
@@ -37,6 +40,9 @@ function Cart(props) {
 
 		axios.delete('/yummi-pizza/public/api/order_items/'+item.id, {})
 	  .then(function (response) {
+	  	if (!response.data[0] || response.data[0].items || response.data[0].items.length === 0) {
+	  		setStatus('The shopping cart is empty!')
+	  	}
 			setOrder(response.data[0]);
 	  })
 	  .catch(function (error) {

@@ -157,11 +157,11 @@ function Menu(props) {
 						  height: 'auto',
 	  				}}/>
 	  			</div>
-		  		<div className="col-xs-push-0 col-xs-6 col-md-6 my-auto">
+		  		<div className="col-xs-push-0 col-xs-6 col-md-5 col-lg-6 my-auto">
 		  			<h4>{value.name}</h4>
 		  			<p className="text-justify">{value.description}</p>
 		  		</div>
-		  		<div className="col-xs-2 col-md-1 my-auto">
+		  		<div className="col-xs-2 col-md-2 col-lg-1 my-auto">
 		  			<input type="number"
 		  				name={ "quantity_" +  value.id }
 		  				min="1"
