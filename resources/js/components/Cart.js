@@ -35,8 +35,10 @@ function Cart(props) {
 
   }, []);
 
-	const removeFromCart = (item, index) => {
+	const removeFromCart = (ev, item, index) => {
 		const temp = { ...order };
+
+		ev.target.parentElement.parentElement.remove();
 
 		axios.delete('/yummi-pizza/public/api/order_items/'+item.id, {})
 	  .then(function (response) {
@@ -108,7 +110,7 @@ function Cart(props) {
 					  		</div>
 					  		<div className="col-xs-2 col-sm-2 col-md-2 my-auto">
 					  			<button type="button" className="btn btn-danger float-right btn-sm"
-					  				onClick={() => removeFromCart(value, index)}
+					  				onClick={(ev) => removeFromCart(ev, value, index)}
 					  			>
 					  				Remove from cart
 					  			</button>

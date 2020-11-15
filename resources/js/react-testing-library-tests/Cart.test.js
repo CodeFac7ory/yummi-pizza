@@ -88,8 +88,7 @@ test('Loads shoping cart correctly and deletes first item', async () => {
 	});
 
 	const removeFromCartButtons1 = await waitFor(() => screen.getAllByText('Remove from cart'));
-	console.log('[[[removeFromCartButtons1]]]');
-	console.log(removeFromCartButtons1);
+	expect(removeFromCartButtons1).toHaveLength(2);
 });
 
 
